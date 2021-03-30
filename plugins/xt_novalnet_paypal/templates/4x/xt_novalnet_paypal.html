@@ -1,0 +1,112 @@
+<div class="box box-white box-hover">
+    <p class="payment-name">
+		<span style="display:inline-block;width: 25px;">
+			{if !empty($payment_hidden)}
+				{form type=hidden name=selected_payment value=$payment_code}
+			{else}
+				{(!empty($payment_selected) && $payment_code == $payment_selected) ? {form type=radio name=selected_payment value=$payment_code checked=true} : {form type=radio name=selected_payment value=$payment_code}}
+			{/if}
+		</span>
+		{$payment_name}
+		{if !empty($payment_price.formated)}
+			<span class="normal">
+				({$payment_price.formated})
+			</span>
+		{/if}
+
+		{if $payment_logo == 'true'}
+			<a style="float:right" href="{txt key=XT_NOVALNET_PAYPAL_URL_LINK}" title="{$payment_name}" alt="{$payment_name}" target="_new" >
+				<img src="{$payment_logo_src}" alt="{$payment_name}" class="icon img-responsive img-thumbnail pull-right"/>
+			</a>
+		{/if}
+	</p>
+
+	<div class="payment-desc">
+		{if !empty($one_click_process_enabled)}
+
+			<!-- Given PayPal details block -->
+			<div id="nn_given_paypal_details_div" style={$given_details_style}>
+				<p class="payment-desc" style="padding-left:25px;">
+					{txt key=XT_NOVALNET_PAYPAL_REFERENCE_TRANSACTION_DESCRIPTION_TEXT}
+				</p>
+				{if $test_mode == 'true'}
+					<p class="payment-desc" style="padding-left:25px;color:black;">
+						{txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+					</p>
+				{/if}
+
+				{if !empty($user_info)}
+					<p class="payment-desc" style="padding-left:25px;">
+						{$user_info}
+					</p>
+				{/if}
+				<a class ="button"  id="nn_new_paypal_link" style="cursor: pointer;">
+					{txt key= XT_NOVALNET_NEW_PAYPAL_TEXT}
+				</a>
+				<table width="100%" border="0" cellspacing="0" cellpadding="6">
+					{if $user_masked_data.paypal_transaction_id !=''}
+						<tr>
+							<td colspan class="main">{txt key=XT_NOVALNET_PAYPAL_REFERENCE_TRANSACTION_TEXT}</td>
+							<td colspan="2" class="main">{$user_masked_data.paypal_transaction_id}</td>
+						</tr>
+					{/if}
+					<tr>
+						<td colspan class="main">{txt key=XT_NOVALNET_TRANSACTION_ID_TEXT}</td>
+						<td colspan="2" class="main">{$smarty.session.xt_novalnet_paypal.masked_tid}</td>
+					</tr>
+				</table>
+			</div>
+		{/if}
+
+		<!-- New PayPal details block -->
+		<div id="nn_new_paypal_details_div" style={$new_details_style}>
+
+			{if !empty($payment_desc)}
+				<p class="payment-desc" style="padding-left:25px;">{$payment_desc}</p>
+			{/if}
+			<br/>
+			<p class="payment-desc" style="padding-left:25px;">
+				{txt key=XT_NOVALNET_REDIRECTION_ALERT_TEXT}
+			</p>
+
+			{if $test_mode == 'true'}
+				<p class="payment-desc" style="padding-left:25px;color:red;">
+					{txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+				</p>
+			{/if}
+
+			{if !empty($user_info)}
+				<p class="payment-desc" style="padding-left:25px;">
+					{$user_info}
+				</p>
+			{/if}
+
+			{if $one_click_process_enabled}
+				<a class ="button"  id="nn_given_paypal_link" style="cursor: pointer;">
+					{txt key= XT_NOVALNET_GIVEN_PAYPAL_TEXT}
+				</a>
+			{/if}
+		</div>
+		{if !empty($one_click_process_enabled)}
+			{form type=hidden id=xt_novalnet_paypal_one_click_process name=xt_novalnet_paypal_one_click_process value=$one_click_process_enabled}
+		{else}
+			{form type=hidden id=xt_novalnet_paypal_one_click_process name=xt_novalnet_paypal_one_click_process}
+		{/if}
+    </div>
+</div>
+{literal}
+<script>
+    $('#nn_new_paypal_link').click(function(event){
+        $('#nn_given_paypal_details_div').hide();
+        $('#nn_new_paypal_details_div').show();
+        $('#xt_novalnet_paypal_one_click_process').val('0');
+        event.stopImmediatePropagation();
+    });
+    $('#nn_given_paypal_link').click(function(event){
+        $('#nn_new_paypal_details_div').hide();
+        $('#nn_given_paypal_details_div').show();
+        $('#xt_novalnet_paypal_one_click_process').val('1');
+        event.stopImmediatePropagation();
+    });
+</script>
+{/literal}

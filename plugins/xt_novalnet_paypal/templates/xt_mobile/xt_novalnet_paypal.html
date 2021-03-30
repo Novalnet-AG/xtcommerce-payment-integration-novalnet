@@ -1,0 +1,132 @@
+<li data-role="divider" data-theme="c">
+	{$payment_name}
+</li>
+<li data-theme="c">
+	<div data-role="controlgroup">
+		<label>
+			{if !empty($payment_hidden)}
+				{form type=hidden name=selected_payment value=$payment_code}
+			{else}
+				{(!empty($payment_selected) && $payment_code == $payment_selected) ? {form type=radio name=selected_payment value=$payment_code checked=true} : {form type=radio name=selected_payment value=$payment_code}}
+			{/if}
+			<span class="ui-li-heading">
+				<span class="floatLeft">
+					<strong>
+						{$payment_name}
+						{if !empty($payment_price.formated)}
+							({$payment_price.formated})
+						{/if}
+					</strong>
+				</span>
+				{if $payment_logo == 'true'}
+					<span class="floatRight">
+						<a href="{txt key=XT_NOVALNET_PAYPAL_URL_LINK}" title="{$payment_name}" alt="{$payment_name}" target="_new" >
+							<img src="{$payment_logo_src}" alt="{$payment_name}"/>
+						</a>
+					</span>
+				{/if}
+			</span>
+
+			{if !empty($one_click_process_enabled)}
+				<p class="ui-li-desc" id="nn_paypal_reference_description">
+					{txt key=XT_NOVALNET_PAYPAL_REFERENCE_TRANSACTION_DESCRIPTION_TEXT}
+				</p>
+				{if !empty($payment_desc)}
+					<p class="ui-li-desc" id="nn_paypal_payment_description" style="display:none">
+						{$payment_desc}<br/>
+						{txt key=XT_NOVALNET_REDIRECTION_ALERT_TEXT}
+					</p>
+				{/if}
+			{else}
+
+				{if !empty($payment_desc)}
+					<p class="ui-li-desc">
+						{$payment_desc}
+					</p>
+				{/if}
+				<p class="ui-li-desc">{txt key=XT_NOVALNET_REDIRECTION_ALERT_TEXT}</p>
+			{/if}
+
+			{if $test_mode == 'true'}
+				<p class="ui-li-desc" style="color:black">
+					{txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+				</p>
+			{/if}
+
+			{if !empty($user_info)}
+				<p class="ui-li-desc">
+					{$user_info}
+				</p>
+			{/if}
+		</label>
+		<ul data-role="listview" data-theme="c">
+			{if !empty($one_click_process_enabled)}
+
+				<!-- Given account details block -->
+				<div id="nn_given_paypal_details_div" style={$given_details_style}>
+
+					<li data-role="divider" data-theme="c">
+						<p class="xtm-payment-desc">
+							<a class ="button" id="nn_new_paypal_link" style="cursor: pointer;">
+								{txt key= XT_NOVALNET_NEW_PAYPAL_TEXT}
+							</a>
+						</p>
+					</li>
+					{if $user_masked_data.paypal_transaction_id !=''}
+						<li>
+							<label>
+								{txt key=XT_NOVALNET_PAYPAL_REFERENCE_TRANSACTION_TEXT}
+								{form type=text value=$user_masked_data.paypal_transaction_id params='readonly=true'"}
+							</label>
+						</li>
+					{/if}
+					<li>
+						<label>
+							{txt key=XT_NOVALNET_TRANSACTION_ID_TEXT}
+							{form type=text value=$smarty.session.xt_novalnet_paypal.masked_tid params='readonly=true'"}
+						</label>
+					</li>
+				</div>
+			{/if}
+
+			<!-- New account details block -->
+			<div id="nn_new_paypal_details_div" style={$new_details_style}>
+				{if !empty($one_click_process_enabled)}
+					<li data-role="divider" data-theme="c">
+						<p class="xtm-payment-desc">
+							<a class ="button" id="nn_given_paypal_link" style="cursor: pointer;">
+								{txt key= XT_NOVALNET_GIVEN_PAYPAL_TEXT}
+							</a>
+						</p>
+					</li>
+				{/if}
+				{if !empty($one_click_process_enabled)}
+					{form type=hidden id=xt_novalnet_paypal_one_click_process name=xt_novalnet_paypal_one_click_process value=$one_click_process_enabled}
+				{else}
+					{form type=hidden id=xt_novalnet_paypal_one_click_process name=xt_novalnet_paypal_one_click_process}
+				{/if}
+			</div>
+		</ul>
+	</div>
+</li>
+{literal}
+<script>
+    $('#nn_new_paypal_link').click(function(event){
+        $('#nn_given_paypal_details_div').hide();
+        $('#nn_new_paypal_details_div').show();
+		$('#nn_paypal_reference_description').hide();
+		$('#nn_paypal_payment_description').show();
+        $('#xt_novalnet_paypal_one_click_process').val('0');
+        event.stopImmediatePropagation();
+    });
+    $('#nn_given_paypal_link').click(function(event){
+        $('#nn_new_paypal_details_div').hide();
+        $('#nn_given_paypal_details_div').show();
+        $('#nn_paypal_reference_description').show();
+		$('#nn_paypal_payment_description').hide();
+        $('#xt_novalnet_paypal_one_click_process').val('1');
+        event.stopImmediatePropagation();
+    });
+</script>
+{/literal}
+

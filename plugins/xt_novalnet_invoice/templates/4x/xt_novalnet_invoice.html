@@ -1,0 +1,170 @@
+<div class="box box-white box-hover">
+    <p class="payment-name">
+		<span style="display:inline-block;width: 25px;">
+			{if !empty($payment_hidden)}
+				{form type=hidden name=selected_payment value=$payment_code}
+			{else}
+				{if !empty($payment_selected) && $payment_code == $payment_selected}
+					{form type=radio name=selected_payment value=$payment_code checked=true}
+				{else}
+					{form type=radio name=selected_payment value=$payment_code}
+				{/if}
+			{/if}
+		</span>
+		{$payment_name}
+		{if !empty($payment_price.formated)}
+			<span class="normal">
+				({$payment_price.formated})
+			</span>
+		{/if}
+
+		{if $payment_logo == 'true'}
+			<a style="float:right" href="{txt key=XT_NOVALNET_INVOICE_URL_LINK}" title="{$payment_name}" alt="{$payment_name}" target="_new" >
+
+				<img src="{$payment_logo_src}" alt="{$payment_name}" class="icon img-responsive img-thumbnail pull-right"/>
+			</a>
+		{/if}
+	</p>
+
+	{if !empty($payment_desc)}
+		<p class="payment-desc" style="padding-left:25px;">
+			{$payment_desc}
+		</p>
+	{/if}
+
+	{if $test_mode == 'true'}
+		<p class="payment-desc" style="padding-left:25px;color:black;">
+			{txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+		</p>
+	{/if}
+
+	{if !empty($user_info)}
+		<p class="payment-desc" style="padding-left:25px;">
+			{$user_info}
+		</p>
+	{/if}
+
+	<div class="payment-desc">
+		<script type="text/javascript" src="{$js_path}"></script>
+        {if empty($smarty.session.novalnet.xt_novalnet_invoice.proceed_pin_call)}
+			<table width="100%" border="0" cellspacing="0" cellpadding="6">
+
+				{if !empty($show_fraud_module) && empty($smarty.session.xt_novalnet_invoice.guarantee_payment) && empty($smarty.session.xt_novalnet_invoice.guarantee_payment_country_error) && empty($smarty.session.xt_novalnet_invoice.guarantee_payment_currency_error) && empty($smarty.session.xt_novalnet_invoice.guarantee_payment_address_error) && empty($smarty.session.xt_novalnet_invoice.guarantee_payment_mimimum_amount_error)}
+
+					<!-- Fraud check block -->
+					<tr>
+						<td colspan class="main">{$fraud_check_label}</td>
+						<td colspan="2" class="main">{form type=text id=xt_novalnet_invoice_fraud_data name=xt_novalnet_invoice_fraud_data value=$fraud_check_value params='autocomplete=off' onkeypress="return novalnet_invoice_validation(event,'number')"}</td>
+					</tr>
+				{/if}
+
+					<!-- Guarantee block -->
+					{if !empty($xt_novalnet_invoice_enable_guarantee_payment) && !empty($xt_novalnet_invoice_show_dob_field) }
+					<tr>
+						<td colspan class="main">{txt key=XT_NOVALNET_DOB_FIELD_TEXT}</td>
+						<td colspan="2" class="main">{form type=text id=xt_novalnet_invoice_user_dob name=xt_novalnet_invoice_user_dob value=$customers_dob params='autocomplete=off'}<div id="xt_novalnet_invoice_user_dob-alert" style="color:red;"></div><span>(dd.mm.yyyy)</span>
+					{form type=hidden id=xt_novalnet_invoice_invalid_dob_format value=$date_format_error}</td>
+					</tr>
+
+					{elseif !empty($xt_novalnet_invoice_guarantee_payment_country_error) ||  !empty($xt_novalnet_invoice_guarantee_payment_currency_error) || !empty($xt_novalnet_invoice_guarantee_payment_address_error) || !empty($xt_novalnet_invoice_guarantee_payment_mimimum_amount_error)}
+					
+					<!-- Guarantee error block -->
+					<tr>
+						<td colspan class="main" style="color:red">{txt key=XT_NOVALNET_BASIC_GUARANTEE_REQUIREMENT_MISSING_ERROR_TEXT}
+						{if ($xt_novalnet_invoice_guarantee_payment_country_error) }
+						<p style="color:red">
+							{txt key=XT_NOVALNET_BASIC_GUARANTEE_COUNTRY_MISMATCH_ERROR_TEXT}
+						</p> 
+						{/if}
+						{if ($xt_novalnet_invoice_guarantee_payment_currency_error) }
+						<p style="color:red">
+							{txt key=XT_NOVALNET_BASIC_GUARANTEE_CURRENCY_INVALID_ERROR_TEXT}
+						</p>
+						{/if}
+						{if ($xt_novalnet_invoice_guarantee_payment_address_error) }
+						<p style="color:red">
+							{txt key=XT_NOVALNET_BASIC_GUARANTEE_ADDRESS_MISMATCH_ERROR_TEXT}
+						</p>
+						{/if}
+						{if ($xt_novalnet_invoice_guarantee_payment_mimimum_amount_error) }
+						<p style="color:red">
+							{$guarantee_minimum_amount_error_text}
+						</p>
+						</td>
+						{/if}
+					</tr>
+				{/if}
+			</table>
+       {else}
+
+			<!-- PIN check block -->
+			<table width="100%" border="0" cellspacing="0" cellpadding="6">
+				<tr>
+					<td colspan class="main">{txt key=XT_NOVALNET_PIN_REQUEST_TEXT}</td>
+					<td colspan="2" class="main">{form type=text id=xt_novalnet_invoice_pin name=xt_novalnet_invoice_pin params='autocomplete=off' onkeypress="return novalnet_invoice_validation(event,'alphaNum')" }</td>
+				</tr>
+				<tr>
+					<td  class="main">{form type=checkbox name=xt_novalnet_invoice_new_pin id=xt_novalnet_invoice_new_pin}{txt key=XT_NOVALNET_NEWPIN_REQUEST_TEXT}</td>
+				</tr>
+			</table>
+        {/if}
+    </div>
+</div>
+{literal}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	// Validate the form fields.
+	function novalnet_invoice_validation(event, validate) {
+		var keycode = event.keyCode;
+		if('which' in event) {
+			keycode = event.which;
+		}
+
+		if(validate === 'alphaNum') {
+			var reg = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g ;
+		}else if(validate === 'number'){
+			var reg = /^(?:[0-9]+$)/ ;
+		}
+
+		return ( reg.test(String.fromCharCode(keycode)) || keycode == 0 || keycode == 8 || keycode == 118);
+	}
+
+	// Fraud Module - Remove the value in pin textbox.
+	$('#xt_novalnet_invoice_new_pin').change(
+		function() {
+			if ($("#xt_novalnet_invoice_new_pin").is(':checked')) {
+				$('#xt_novalnet_invoice_pin').val('');
+			}
+		}
+	);
+
+	// Fraud Module - Uncheck the checkbox.
+	$("#xt_novalnet_invoice_pin").keypress(
+		function() {
+			$('#xt_novalnet_invoice_new_pin').attr('checked', false);
+			// Unchecks checkbox.
+		}
+	);
+
+	if($("#xt_novalnet_invoice_user_dob") != undefined) {
+
+		$("#xt_novalnet_invoice_user_dob").blur(function(){
+			var pattern =/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.([0-9]{4})$/;
+			var date_value = this.value.trim();
+			if(date_value != "" && !pattern.test(date_value)) {
+				$("#xt_novalnet_invoice_user_dob").val('');
+				$("#xt_novalnet_invoice_user_dob-alert").html($("#xt_novalnet_invoice_invalid_dob_format").val())
+				return false;
+			}
+			$("#xt_novalnet_invoice_user_dob").val(date_value);
+			$("#xt_novalnet_invoice_user_dob-alert").html('');
+		});
+		$( function() {
+			$( "#xt_novalnet_invoice_user_dob" ).datepicker({yearRange: '-100:+0', dateFormat: 'dd.mm.yy' ,changeMonth: true, changeYear: true});
+		});
+	}
+</script>
+{/literal}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtcommerceplugin>
+    <language_content>
+        <phrase>
+            <key>XT_NOVALNET_PAYPAL_SHOPTYPE_SELECT_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Einkaufstyp auswählen</value>
+            </de>
+            <en>
+              <value>Select shopping type</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_PAYPAL_ONECLICK_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Kauf mit einem Klick</value>
+            </de>
+            <en>
+              <value>One click shopping</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_PAYPAL_ZEROAMOUNT_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Transaktionen mit Betrag 0</value>
+            </de>
+            <en>
+              <value>Zero amount booking</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_PAYPAL_REFERENCE_TRANSACTION_HINT</key>
+            <class>admin</class>
+            <de>
+                <value><![CDATA[<span style="color:red;">Um diese Option zu verwenden, müssen Sie die Option Billing Agreement (Zahlungsvereinbarung) in Ihrem PayPal-Konto aktiviert haben. Kontaktieren Sie dazu bitte Ihren Kundenbetreuer bei PayPal.</span><br /><br /> ]]></value>
+            </de>
+            <en>
+				<value><![CDATA[<span style="color:red;">In order to use this option you must have billing agreement option enabled in your PayPal account. Please contact your account manager at PayPal.</span><br /><br /> ]]></value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_PAYPAL_CAPTURE_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Zahlung einziehen</value>
+            </de>
+            <en>
+                <value>Capture</value>
+            </en>
+        </phrase><phrase>
+            <key>XT_NOVALNET_PAYPAL_AUTHORIZE_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Zahlung autorisieren</value>
+            </de>
+            <en>
+                <value>Authorize</value>
+            </en>
+        </phrase>
+    </language_content>
+</xtcommerceplugin>
