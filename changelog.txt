@@ -1,0 +1,23 @@
+*** Changelog ***
+
+= 11.3.0 - 2021.02.15 = 
+
+* Fix      - Chrome SameSite cookies
+* New      - Implemented Payment duration for Prepayment
+* Enhanced - Multistore configuration has been optimized in shop back-end
+* Enhanced - Callback has been optimized for the payment module as per the new testcase
+* Enhanced - Barzahlen payment name and logo
+* Enhanced - Adjusted the payment module for IPV6 condition
+* Enhanced - Implemented new encryption method for redirect payments
+* Enhanced - Auto configuration call perform via cURL method
+* Removed  - Proxy server configuration
+* Removed  - Gateway timeout configuration
+* Removed  - href links for the payment logo
+* Removed  - PIN by callback and PIN by SMS for Direct Debit SEPA and Invoice payment methods
+* Removed  - Referrer Id configuration 
+
+= 11.2.0 - 2019.09.11 =
+
+* New release
+
+*****************************************
