@@ -1,8 +1,8 @@
 # NOVALNET PAYMENT INTEGRATION FOR XT:COMMERCE
 Novalnet’s Payment Plugin ensures simple and secure integration of payments and payment services for xt:Commerce shops, allowing shop owners to automate the entire payment process from checkout till collection. 
+
 ## Requirements 
 Novalnet <a href="https://www.novalnet.de/">merchant account</a> is required for using this Novalnet Payment Gateway for xt:Commerce. The plugin is available for the 6.x – 6.2.2 PRO version in the following languages: EN & DE.
-
 Also xt:Commerce 3,4,5 are supported by Novalnet. More information can be found here: <a href="https://www.novalnet.de/modul/xtcommerce-payment-module">here</a>
 
 ## Advanced functions for payment processing
@@ -23,6 +23,7 @@ Also xt:Commerce 3,4,5 are supported by Novalnet. More information can be found 
 -	Responsive templates<br>
 
 For detailed documentation and other technical inquiries, please send us an email at technic@novalnet.de.
+
 ## Integrated payment methods
 -	Direct Debit SEPA
 -	Credit Card/Debit Card
@@ -37,23 +38,29 @@ For detailed documentation and other technical inquiries, please send us an emai
 -	Przelewy24
 -	Direct Debit SEPA with payment guarantee
 -	Invoice with payment guarantee
+
 ## Installation
 Easy installation of Novalnet Payment Plugin for xt:Commerce will be done through the following steps: 
 1.	Get the payment plugin & detailed documentation by<a href="https://www.novalnet.de/kontakt/sales"> contacting us </a>
 2.	Install payment plugin to your xt:Commerce shop 
 3.	Configure Product Activation Key in the shop admin panel 
-4.	Activate & configure the preferred payment types in your shop admin panel
+4.	Activate & configure the preferred payment types in your shop admin panel. 
+
 ## License  
 See our License Agreement at: https://www.novalnet.com/payment-plugins/free/license
+
 ## Documentation & Support
-For more information about the Novalnet Payment Plugin for xt:Commerce, please get in touch with us: sales@novalnet.de or +49 89 9230683-20<br>
+For more information about the Novalnet Payment Plugin for xt:Commerce, please get in touch with us: <a href="mailto:sales@novalnet.de"> sales@novalnet.de </a> or +49 89 9230683-20<br>
 
 Novalnet AG<br>
-Zahlungsinstitut (ZAG) <br>
-Feringastr. 4<br>
-85774 Unterföhring<br>
+Zahlungsinstitut (ZAG)<br>
+Gutenbergstraße 7<br>
+D-85748 Garching<br>
 Deutschland<br>
-Web: www.novalnet.de 
+E-mail: sales@novalnet.de<br>
+Tel: +49 89 9230683-20<br>
+Web: www.novalnet.de
+
 ## Who is Novalnet AG?
 <p>Novalnet AG is a <a href="https://www.novalnet.de/zahlungsinstitut">leading financial services institution</a> offering advanced payment gateways for processing online payments. Operating in the market as a full payment service provider, Novalnet AG was founded in Ismaning near Munich, and provides online merchants user-friendly payment integration with all major shop systems as well as with self-programmed e-commerce sites.</p>
 <p>Novalnet Payment Platform offers merchants an <a href="https://www.novalnet.de/produkte"> end-to-end solution for automated payment processing </a> all the way from checkout to receivables. Our SaaS engine is <a href="https://www.novalnet.de/pci-dss-zertifizierung"> PCI DSS certified </a>and designed to enable real-time risk management, secured payments via escrow accounts, efficient receivables management, dynamic member and subscription management, customized payment solutions for various business models (e.g. marketplaces, affiliate programs etc.) and much more.</p> 
