@@ -1,0 +1,42 @@
+<div class="box box-white box-hover">
+    <p class="payment-name">
+        <span style="display:inline-block;width: 25px;">
+            {if !empty($payment_hidden)}
+                {form type=hidden name=selected_payment value=$payment_code}
+            {else}
+                {(!empty($payment_selected) && $payment_code == $payment_selected) ? {form type=radio name=selected_payment value=$payment_code checked=true} : {form type=radio name=selected_payment value=$payment_code}}
+            {/if}
+        </span>
+        {$payment_name}
+        {if !empty($payment_price.formated)}
+            <span class="normal">
+                ({$payment_price.formated})
+            </span>
+        {/if}
+
+        {if $payment_logo == 'true'}
+            <a style="float:right" title="{$payment_name}" alt="{$payment_name}" target="_new" >
+                <img src="{$payment_logo_src}" alt="{$payment_name}" class="icon img-responsive img-thumbnail pull-right"/>
+            </a>
+        {/if}
+    </p>
+
+    {if !empty($payment_desc)}
+        <p class="payment-desc" style="padding-left:25px;">
+            {$payment_desc}
+        </p>
+    {/if}
+
+    {if $test_mode == 'true'}
+        <p class="payment-desc" style="padding-left:25px;color:red;">
+            {txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+        </p>
+    {/if}
+
+    {if !empty($user_info)}
+        <p class="payment-desc" style="padding-left:25px;">
+            {$user_info}
+        </p>
+    {/if}
+</div>
+

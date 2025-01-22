@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtcommerceplugin>
+    <language_content>
+        <phrase>
+            <key>XT_NOVALNET_CC_SHOPTYPE_SELECT_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Einkaufstyp auswählen</value>
+            </de>
+            <en>
+              <value>Select shopping type</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_CC_ONECLICK_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Kauf mit einem Klick</value>
+            </de>
+            <en>
+              <value>One-click shopping</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_CC_ZEROAMOUNT_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Transaktionen mit Betrag 0</value>
+            </de>
+            <en>
+              <value>Zero amount booking</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_CC_IFRAME_CARD_DETAILS_ERROR_TEXT</key>
+            <class>store</class>
+            <de>
+                <value>Ihre Kreditkartendaten sind ungültig</value>
+            </de>
+            <en>
+              <value>Your credit card details are invalid</value>
+            </en>
+        </phrase>
+        <phrase>
+            <key>XT_NOVALNET_CC_CAPTURE_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Zahlung einziehen</value>
+            </de>
+            <en>
+                <value>Capture</value>
+            </en>
+        </phrase><phrase>
+            <key>XT_NOVALNET_CC_AUTHORIZE_TEXT</key>
+            <class>admin</class>
+            <de>
+                <value>Zahlung autorisieren</value>
+            </de>
+            <en>
+                <value>Authorize</value>
+            </en>
+        </phrase>
+    </language_content>
+</xtcommerceplugin>
