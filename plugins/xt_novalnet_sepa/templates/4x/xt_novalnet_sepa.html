@@ -1,0 +1,227 @@
+<div class="box box-white box-hover">
+    <p class="payment-name">
+        <span style="display:inline-block;width: 25px;">
+            {if !empty($payment_hidden)}
+                {form type=hidden name=selected_payment value=$payment_code}
+            {else}
+                {if !empty($payment_selected) && $payment_code == $payment_selected}
+                    {form type=radio name=selected_payment value=$payment_code checked=true}
+                {else}
+                    {form type=radio name=selected_payment value=$payment_code}
+                {/if}
+            {/if}
+        </span>
+        {$payment_name}
+        {if !empty($payment_price.formated)}
+            <span class="normal">
+                ({$payment_price.formated})
+            </span>
+        {/if}
+
+        {if $payment_logo == 'true'}
+            <a style="float:right" title="{$payment_name}" alt="{$payment_name}" target="_new" >
+
+                <img src="{$payment_logo_src}" alt="{$payment_name}" class="icon img-responsive img-thumbnail pull-right"/>
+            </a>
+        {/if}
+    </p>
+
+    {if !empty($payment_desc)}
+        <p class="payment-desc" style="padding-left:25px;">
+            {$payment_desc}
+        </p>
+    {/if}
+
+    {if $test_mode == 'true'}
+        <p class="payment-desc" style="padding-left:25px;color:red;">
+            {txt key=XT_NOVALNET_TEST_MODE_NOTIFICATION_TEXT}
+        </p>
+    {/if}
+
+    {if !empty($user_info)}
+        <p class="payment-desc" style="padding-left:25px;">
+            {$user_info}
+        </p>
+    {/if}
+    {if !empty($zero_amount_process_enabled)}
+        <p class="payment-desc" style="padding-left:25px;">
+            {txt key=XT_NOVALNET_ZERO_AMOUNT_ALERT_TEXT}
+        </p>
+    {/if}
+    <div class="payment-desc">
+		<script type="text/javascript" src="https://cdn.novalnet.de/js/v2/NovalnetUtility.js"></script>
+        <script type="text/javascript" src="{$js_path}"></script>
+        {if !empty($one_click_process_enabled)}
+
+            <!-- Given account details block -->
+            <div id="nn_given_account_div" style={$given_details_style}>
+                <a class ="button" id="nn_new_account_link" style="cursor: pointer;">{txt key= XT_NOVALNET_NEW_ACCOUNT_TEXT}</a>
+                <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                    <tr>
+                        <td colspan class="main">{txt key=XT_NOVALNET_SEPA_HOLDER_TEXT}</td>
+                        <td colspan="2" class="main">{$user_masked_data.bankaccount_holder}</td>
+                    </tr>
+                    <tr>
+                        <td colspan class="main">IBAN</td>
+                        <td colspan="2" class="main">{$user_masked_data.iban}</td>
+                    </tr>
+
+                    <!-- Guarantee block -->
+
+                    {if !empty($smarty.session.xt_novalnet_sepa.guarantee_payment) &&empty($xt_novalnet_sepa_guarantee_payment_country_error) && empty($xt_novalnet_sepa_guarantee_payment_currency_error) && empty($xt_novalnet_sepa_guarantee_payment_address_error) && empty($xt_novalnet_sepa_guarantee_payment_mimimum_amount_error)}
+                    
+                        <tr>
+                            <td colspan class="main">{txt key=XT_NOVALNET_DOB_FIELD_TEXT}</td>
+                            <td colspan="2" class="main">{form type=text id=xt_novalnet_sepa_one_click_user_dob name=xt_novalnet_sepa_one_click_user_dob value=$customers_dob params='autocomplete=off' onkeypress = "return NovalnetUtility.isNumericBirthdate(this,event)" maxlength="10"} <div id="xt_novalnet_sepa_one_click_user_dob-alert" style="color:red;"></div><span>{txt key=XT_NOVALNET_SEPA_DOB_TEXT}</span>
+                            {form type=hidden id=xt_novalnet_sepa_one_click_invalid_dob_format value=$date_format_error}</td>
+                        </tr>
+                    {/if}
+                </table>
+            </div>
+        {/if}
+        <!-- New account details block -->
+        <div id="nn_new_account_div" style={$new_details_style}>
+            {if !empty($one_click_enabled_desc)}
+                <p class="payment-desc" style="padding-left:25px;">
+                    {txt key=XT_NOVALNET_ONECLICK_TEXT_SEPA_DESC}
+                </p>
+            {/if}
+           
+            {if !empty($one_click_process_enabled)}
+                <a class ="button"  id="nn_given_account_link" style="cursor: pointer;">
+                    {txt key= XT_NOVALNET_GIVEN_ACCOUNT_TEXT}
+                </a>
+            {/if}
+            <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                <tr>
+                    <td class="main">{txt key=XT_NOVALNET_SEPA_HOLDER_TEXT}<span style='color:red'> * </span></td>
+                    <td  class="main">{form type=text name=novalnet_sepa_account_holder id=novalnet_sepa_account_holder value=$account_holder params='autocomplete=off' onkeypress="return novalnet_sepa_validation(event,'alpha')"}</td>
+                </tr>
+                <tr>
+                    <td class="main">{txt key=XT_NOVALNET_SEPA_IBAN_TEXT}<span style='color:red'> * </span></td>
+                    <td class="main">{form type=text name=novalnet_sepa_iban id=novalnet_sepa_iban value='' params='autocomplete=off' style="text-transform: uppercase;" onkeypress="return novalnet_sepa_validation(event,'alphaNum')"}</td>
+                </tr>
+                <tr id="nn_bic" style="display: none;">
+                    <td class="main">{txt key=XT_NOVALNET_BIC_TEXT}<span style='color:red'> * </span></td>
+                    <td class="main">{form type=text name=novalnet_sepa_bic id=novalnet_sepa_bic value='' params='autocomplete=off' style="text-transform: uppercase;" onkeypress="return novalnet_sepa_validation(event,'alphaNum')"}</td>
+                </tr>
+                <tr>
+                    <td class="main"></td>
+                    <td>
+                        <a id="novalnet-sepa-mandate" style="color:white;cursor:pointer;text-decoration:none;" onclick="return novalnet_sepa.sepa_mandate_toggle_process()">
+                            <span id="novalnet_sepa_mandate_text">
+                                <strong>
+                                    {txt key=XT_NOVALNET_SEPA_MANDATE_TEXT}
+                                </strong>
+                            </span>
+                        </a>
+                        <div style="display:none;background-color:#3d9cd2;padding: 1em 1.618em;" id="novalnet-about-mandate">
+                            {txt key=XT_NOVALNET_SEPA_MANDATE_ABOUT_TEXT1}
+                            <br/>
+                            <br/>
+                                <strong>{txt key=XT_NOVALNET_SEPA_MANDATE_ABOUT_TEXT2}DE53ZZZ00000004253</strong>
+                            <br/>
+                            <br/> 
+                                <strong>{txt key=XT_NOVALNET_SEPA_MANDATE_ABOUT_TEXT3}</strong>{txt key=XT_NOVALNET_SEPA_MANDATE_ABOUT_TEXT4}
+                        </div>
+                    </td>           
+                </tr>
+                <!-- Guarantee block -->
+                {if !empty($xt_novalnet_sepa_enable_guarantee_payment) && !empty($xt_novalnet_sepa_show_dob_field) }
+                
+                    <tr>
+                        <td colspan class="main">{txt key=XT_NOVALNET_DOB_FIELD_TEXT}</td>
+                        <td colspan="2" class="main">{form type=text id=xt_novalnet_sepa_user_dob name=xt_novalnet_sepa_user_dob value=$customers_dob params='autocomplete=off' onkeypress = "return NovalnetUtility.isNumericBirthdate(this,event)" maxlength="10"} <div id="xt_novalnet_sepa_user_dob-alert" style="color:red;"></div><span>{txt key=XT_NOVALNET_SEPA_DOB_TEXT}</span>
+                        {form type=hidden id=xt_novalnet_sepa_invalid_dob_format value=$date_format_error}</td>
+                    </tr>
+                {/if}
+                {form type=hidden id=sepa_invalid_account_error value=$sepa_invalid_account_error}
+            </table>
+        </div>
+        {if !empty($one_click_process_enabled)}
+            {form type=hidden id=xt_novalnet_sepa_one_click_process name=xt_novalnet_sepa_one_click_process value=$one_click_process_enabled}
+        {else}
+            {form type=hidden id=xt_novalnet_sepa_one_click_process name=xt_novalnet_sepa_one_click_process}
+        {/if}
+
+        {if empty($smarty.session.xt_novalnet_sepa.guarantee_payment) && !empty($xt_novalnet_sepa_guarantee_payment_country_error) ||  !empty($xt_novalnet_sepa_guarantee_payment_currency_error) || !empty($xt_novalnet_sepa_guarantee_payment_address_error) || !empty($xt_novalnet_sepa_guarantee_payment_mimimum_amount_error)}
+        
+            <!-- Guarantee error block -->
+            <table width="100%" border="0" cellspacing="0" cellpadding="6">
+                <tr>
+                    <td colspan class="main" style="color:red">{txt key=XT_NOVALNET_BASIC_GUARANTEE_REQUIREMENT_MISSING_ERROR_TEXT}
+                    {if ($xt_novalnet_sepa_guarantee_payment_country_error) }
+                    <p style="color:red">
+                        {txt key=XT_NOVALNET_BASIC_GUARANTEE_COUNTRY_MISMATCH_ERROR_TEXT}
+                    </p> 
+                    {/if}
+                    {if ($xt_novalnet_sepa_guarantee_payment_currency_error) }
+                    <p style="color:red">
+                        {txt key=XT_NOVALNET_BASIC_GUARANTEE_CURRENCY_INVALID_ERROR_TEXT}
+                    </p>
+                    {/if}
+                    {if ($xt_novalnet_sepa_guarantee_payment_address_error) }
+                    <p style="color:red">
+                        {txt key=XT_NOVALNET_BASIC_GUARANTEE_ADDRESS_MISMATCH_ERROR_TEXT}
+                    </p>
+                    {/if}
+                    {if ($xt_novalnet_sepa_guarantee_payment_mimimum_amount_error) }
+                    <p style="color:red">
+                        {$guarantee_minimum_amount_error_text}
+                    </p>
+                    </td>
+                    {/if}
+                </tr>
+            </table>
+        {/if}
+    </div>
+</div>
+{literal}
+    <script>
+        // Validate the form fields.
+        function novalnet_sepa_validation(event, validate) {
+            var keycode = event.keyCode;
+            if('which' in event) {
+                keycode = event.which;
+            }
+
+            if(validate === 'alphaNum') {
+                var reg = /^(?:[a-zA-Z0-9]+$)/;
+            }else if(validate === 'alpha') {
+                var reg = /[^0-9\[\]\/\\#,+@!^()$~%'"=:;<>{}\_\|*?`]/g;
+            }else if(validate === 'number'){
+                var reg = /^(?:[0-9]+$)/;
+            }
+
+            return ( reg.test(String.fromCharCode(keycode)) || keycode == 0 || keycode == 8 || keycode == 118 );
+        }
+        $('#novalnet_sepa_iban').on('keyup', function () {
+			var iban = $.trim($('#novalnet_sepa_iban').val());
+			if (iban != '') {
+				if (iban.length >= 2) {
+					var codes = ['GB', 'CH', 'MC', 'SM', 'GI'];
+					var countrycode = iban.substring(0, 2).toUpperCase();
+					if (codes.includes(countrycode)) {
+						$('#nn_bic').css('display', 'block');
+					}
+				} else {
+					$('#nn_bic').css('display', 'none');
+				}
+			}
+		});
+
+        $('#nn_new_account_link').click(function(event){
+            $('#nn_given_account_div').hide();
+            $('#nn_new_account_div').show();
+            $('#xt_novalnet_sepa_one_click_process').val('');
+            event.stopImmediatePropagation();
+        });
+        $('#nn_given_account_link').click(function(event){
+            $('#nn_new_account_div').hide();
+            $('#nn_given_account_div').show();
+            $('#xt_novalnet_sepa_one_click_process').val('1');
+            event.stopImmediatePropagation();
+        });
+       
+    </script>
+{/literal}
