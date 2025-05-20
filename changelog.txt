@@ -1,6 +1,6 @@
 *** Changelog ***
 
-= 11.5.0 - 2025.03.31 =
+= 11.5.0 - 2025.05.20 =
 
 * New - Implemented Online bank transfer payment
 * Fix - Order amount is now correctly updated in Novalnet Transaction Details based on the currency used
