@@ -30,7 +30,7 @@ For detailed documentation and other technical inquiries, please send us an emai
 -	Invoice
 -	Prepayment
 -	PayPal
--	iDEAL
+-	iDEAL | Wero
 -	eps
 -	TWINT
 -	Online bank transfer
